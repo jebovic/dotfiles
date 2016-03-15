@@ -1,0 +1,172 @@
+#!/bin/bash
+#
+# DESCRIPTION:
+#
+#   Set the bash prompt according to:
+#    * the active virtualenv
+#    * the branch/status of the current git repository
+#    * the return value of the previous command
+#    * the fact you just came from Windows and are used to having newlines in
+#      your prompts.
+#
+# USAGE:
+#
+#   1. Save this file as ~/.bash_prompt
+#   2. Add the following line to the end of your ~/.bashrc or ~/.bash_profile:
+#        . ~/.bash_prompt
+#
+# LINEAGE:
+#
+#   Based on work by woods
+#
+#   https://gist.github.com/31967
+
+# The various escape codes that we can use to color our prompt.
+
+if tput setaf 1 &> /dev/null; then
+        tput sgr0; # reset colors
+        bold=$(tput bold);
+        reset=$(tput sgr0);
+        # Solarized colors, taken from http://git.io/solarized-colors.
+        black=$(tput setaf 0);
+	grey=$(tput setaf 239);
+        greyLight=$(tput setaf 245);
+        blue=$(tput setaf 33);
+        cyan=$(tput setaf 37);
+        green=$(tput setaf 77);
+        orange=$(tput setaf 202);
+        purple=$(tput setaf 125);
+        red=$(tput setaf 197);
+        violet=$(tput setaf 61);
+        white=$(tput setaf 15);
+        yellow=$(tput setaf 227);
+	citronDark=$(tput setaf 30);
+	citron=$(tput setaf 36);
+	citronLight=$(tput setaf 156);
+else
+        bold='';
+        reset="\e[0m";
+        black="\e[1;30m";
+        blue="\e[1;34m";
+        cyan="\e[1;36m";
+        green="\e[1;32m";
+        orange="\e[1;33m";
+        purple="\e[1;35m";
+        red="\e[1;31m";
+        violet="\e[1;35m";
+        white="\e[1;37m";
+        yellow="\e[1;33m";
+fi;
+
+# Detect whether the current directory is a git repository.
+function is_git_repository {
+  git branch > /dev/null 2>&1
+}
+
+# Determine the branch/state information for this git repository.
+function set_git_branch {
+  # Capture the output of the "git status" command.
+  git_status="$(git status 2> /dev/null)"
+
+  # Set color based on clean/staged/dirty.
+  if [[ ${git_status} =~ "working directory clean" ]]; then
+    state="${green}"
+  elif [[ ${git_status} =~ "Changes to be committed" ]]; then
+    state="${orange}"
+  else
+    state="${red}"
+  fi
+
+  # Set arrow icon based on status against remote.
+  remote_pattern="Your branch is (.*) of"
+  if [[ ${git_status} =~ ${remote_pattern} ]]; then
+    if [[ ${BASH_REMATCH[1]} == "ahead" ]]; then
+      remote="↑"
+    else
+      remote="↓"
+    fi
+  else
+    remote=""
+  fi
+  diverge_pattern="Your branch and (.*) have diverged"
+  if [[ ${git_status} =~ ${diverge_pattern} ]]; then
+    remote="↕"
+  fi
+
+  # Get the name of the branch.
+  branch_pattern="^On branch ([^${IFS}]*)"
+  if [[ ${git_status} =~ ${branch_pattern} ]]; then
+    branch=${BASH_REMATCH[1]}
+  fi
+
+  # Set the final branch string.
+  BRANCH="${state}(${branch})${remote}${reset} "
+}
+
+# Determine active Python virtualenv details.
+function set_virtualenv () {
+  if test -z "$VIRTUAL_ENV" ; then
+      PYTHON_VIRTUALENV=""
+  else
+      PYTHON_VIRTUALENV="${blue}[`basename \"$VIRTUAL_ENV\"`]${reset} "
+  fi
+}
+
+# Set the full bash prompt.
+function set_bash_prompt () {
+
+  # Set the PYTHON_VIRTUALENV variable.
+  set_virtualenv
+
+  # Set the BRANCH variable.
+  if is_git_repository ; then
+    set_git_branch
+  else
+    BRANCH=''
+  fi
+
+  let fillsize=${COLUMNS}
+  fill=""
+  while [ "$fillsize" -gt "0" ]
+  do
+    fill="-${fill}" # fill with underscores to work on
+    let fillsize=${fillsize}-1
+  done
+
+
+  # Set the bash prompt variable.
+  if [ -z $SSH_TTY ] && [ ! -z $STY ]
+  then
+    promptprefix="${bold}[${reset}${grey}screen+su${bold}]${reset} ";
+  elif [ ! -z $STY ]
+  then
+    promptprefix="${bold}[${reset}${grey}screen${bold}]${reset} ";
+  elif [ -z $SSH_TTY ]
+  then
+    promptprefix="${bold}[${reset}${grey}su${bold}]${reset} ";
+  else
+    promptprefix="";
+  fi
+
+  if [[ $PS1_TYPE == 'short' ]]; then
+      PS1="
+${PYTHON_VIRTUALENV}${promptprefix}${!PROMPTCOLOR1}\u ${!PROMPTCOLOR3}\W${reset} ${BRANCH} "
+  else
+      PS1="
+${PYTHON_VIRTUALENV}${promptprefix}${!PROMPTCOLOR1}\u${!PROMPTCOLOR2}@\h:${bold}${!PROMPTCOLOR3}\w${reset} ${BRANCH} "
+  fi
+
+  SHORT_FILL="${grey}"'\[\e[?7l $fill \e[10D \t \e[?7h\]'"${reset}"
+
+  OLD_PS1="$PS1"
+  PROMPT_SYMBOL=" └ "
+
+  PS1="$OLD_PS1""${SHORT_FILL}""\n${PROMPT_SYMBOL}"
+
+}
+
+# Tell bash to execute this function just before displaying its prompt.
+PROMPT_COMMAND='set_bash_prompt'
+
+alias long="export PS1_TYPE='long'"
+alias short="export PS1_TYPE='short'"

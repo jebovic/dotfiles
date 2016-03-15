@@ -1,0 +1,38 @@
+startup_message off
+term putty-256color
+shell -$SHELL
+defscrollback 30000
+attrcolor b ".I"
+
+# Route keys
+terminfo * k1=\EOP
+terminfo * k2=\EOQ
+terminfo * k3=\EOR
+terminfo * k4=\EOS
+terminfo * k5=\E[15~
+terminfo * k6=\E[17~
+terminfo * k7=\E[18~
+terminfo * k8=\E[19~
+terminfo * k9=\E[20~
+terminfo * F1=\E[23~
+terminfo * F2=\E[24~
+
+# bind F11 F12 to prev / next window
+bindkey -k F1 prev
+bindkey -k F2 next
+
+# bind F5 to reload profile
+bindkey -k k5 stuff "source ~/.bash_profile && clear ^M"
+
+hardstatus alwayslastline
+# First version backup
+# hardstatus string '%{= Kd} %{= Kd}%-w%{= Kr}[%{= KW}%n %t%{= Kr}]%{= Kd}%+w %-= %{KG} %H%{KW}|%{KY}%101`%{KW}|%D %M %d %Y%{= Kc} %C%A%{-}'
+hardstatus string '%{= Kd} %{= Kd}%-w%{+b Kw}[%{+b Kw}%n %t%{+b Kw}]%{= Kd}%+w %-= %{+b Kw}%H%{= KW} | %D %M %d %Y %C%A%{-}'
+
+# make vim window disapear
+altscreen on
+
+#auto start
+screen -t main 0
+
+select 0

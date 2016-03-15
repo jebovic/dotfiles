@@ -1,0 +1,8 @@
+Host suvm-web*
+    IdentityFile ~/.ssh/root_key
+Host *clappsessionmanager
+    IdentityFile ~/.ssh/appsm_key
+Host *clappelasticsearch *clappintegrationcont
+    IdentityFile ~/.ssh/baumgart_key
+Host *clappwebinet dev-php53 clappccs *clasvweb clappwebinet2
+    IdentityFile ~/.ssh/web_key
