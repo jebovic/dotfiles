@@ -1,7 +1,7 @@
 Magic dotfiles
 ==============
 
-Ce dépôt contient des fichiers à placer dans votre UserDir (/home/users/login_unix)
+Ce dépôt contient des fichiers à placer dans votre UserDir
 
 ## Installation
 
@@ -10,7 +10,7 @@ L'installation sera détaillée composant par composant, on supposera que ce dé
 ```bash
 
 cd ~
-git clone appgit@git.intramundi.com:baumgart/dotfiles.git
+git clone https://github.com/jebovic/dotfiles
 
 ```
 
@@ -20,7 +20,7 @@ git clone appgit@git.intramundi.com:baumgart/dotfiles.git
 
 * **bash_profile** : fichier pilote du bash, permet simplement de charger les autres .bash_*
 * **bash_aliases** : contient des alias standards, des raccourcis, des connexions ssh...
-* **bash_env** : sans doute le plus important des fichiers, contient les prérequis Amundi (SYBASE,LD_LIBRARY_PATH...)
+* **bash_env** : contient les variables d'environnement
 * **bash_prompt** : contient toutes les règles d'affichage (branche git, couleurs...)
 * **bash_functions** : contient des fonctions custom (screen, mkdir + cd ...)
 
@@ -102,11 +102,3 @@ scr common
 scr servers
 
 ```
-
-### Passer le proxy Amundi sans encombre
-
-Certains fichiers sont nécessaire pour que certaines applications puissent passer le proxy amundi
-
-* **.wgetrc** : permet à wget de passer le proxy
-* **.npmrc** : permet à npm de passer le proxy (attention on ajoute aussi un prefix pour rediriger les installations des modules vers un dossier personnel)
-* **.curlrc** : permet à curl de passer le proxy
