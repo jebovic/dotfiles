@@ -1,13 +1,13 @@
 # This is Git's per-user configuration file.
 [core]
 # Please adapt and uncomment the following lines:
-	user = Jérémy Baumgarth
-	email = jeremy.baumgarth-ext@amundi.com
-	excludesfile = /home/users/webbaumg/.gitignore_global
+	user = jebovic
+	email = jba@amiralweb.com
+	excludesfile = ~/.gitignore_global
 [user]
 	name = Jérémy Baumgarth
-	email = jeremy.baumgarth-ext@amundi.com
-[url "https://"]
-	insteadOf = git://
+	email = jba@amiralweb.com
+#[url "https://"]
+#	insteadOf = git://
 [color]
 	ui = auto

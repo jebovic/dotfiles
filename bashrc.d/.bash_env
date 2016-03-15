@@ -5,3 +5,5 @@ export GREP_OPTIONS="--exclude=\*~ --exclude=\*.svn\*"
 export PS1_TYPE="long"
 
 export LESS=-R\ $LESS
+
+export TERM=xterm-256color

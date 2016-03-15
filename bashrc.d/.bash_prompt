@@ -137,13 +137,13 @@ function set_bash_prompt () {
   # Set the bash prompt variable.
   if [ -z $SSH_TTY ] && [ ! -z $STY ]
   then
-    promptprefix="${bold}[${reset}${grey}screen+su${bold}]${reset} ";
+    promptprefix="[${grey}screen+su${reset}] ";
   elif [ ! -z $STY ]
   then
-    promptprefix="${bold}[${reset}${grey}screen${bold}]${reset} ";
+    promptprefix="[${grey}screen${reset}] ";
   elif [ -z $SSH_TTY ]
   then
-    promptprefix="${bold}[${reset}${grey}su${bold}]${reset} ";
+    promptprefix="[${grey}su${reset}] ";
   else
     promptprefix="";
   fi
