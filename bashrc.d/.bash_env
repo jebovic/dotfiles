@@ -1,6 +1,6 @@
 export HISTSIZE=200000
 
-export GREP_OPTIONS="--exclude=\*~ --exclude=\*.svn\*"
+# export GREP_OPTIONS="--exclude=\*~ --exclude=\*.svn\*"
 
 export PS1_TYPE="long"
 
