@@ -49,12 +49,9 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git colored-man-page colorize extract history npm symfony2 httpie screen tmux zsh-syntax-highlighting)
+plugins=(git colored-man-page colorize extract history npm symfony2 httpie screen tmux zsh-syntax-highlighting vagrant)
 
 # User configuration
-
-# export PATH="/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
-# export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
 
