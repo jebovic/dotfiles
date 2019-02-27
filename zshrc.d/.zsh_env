@@ -8,5 +8,6 @@ export LESS=-R\ $LESS
 
 if [[ $TERM == xterm ]]; then export TERM=xterm-256color; fi
 
-export PATH="/home/jebovic/git/sources/ansible/bin:$PATH"
+export EDITOR="vim"
+export PATH="$HOME/git/sources/ansible/bin:$HOME/.tmuxifier/bin:$PATH"
 export PYTHONPATH="/home/jebovic/git/sources/ansible/lib:"

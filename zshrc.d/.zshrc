@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-  export ZSH=/home/jebovic/.oh-my-zsh
+  export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -49,11 +49,12 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git colored-man-page colorize extract history npm symfony2 httpie screen tmux zsh-syntax-highlighting vagrant)
+plugins=(git colored-man-page colorize extract history npm symfony2 httpie screen tmux zsh-syntax-highlighting vagrant docker kubectl)
 
 # User configuration
 
 source $ZSH/oh-my-zsh.sh
+source <(helm completion zsh)
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -91,3 +92,15 @@ fi
 if [ -e ~/dotfiles/zshrc.d/.zsh_env ]; then
   . ~/dotfiles/zshrc.d/.zsh_env
 fi
+
+if [ -e ~/.zsh_secret ]; then
+  . ~/.zsh_secret
+fi
+
+# Enable tmuxifier
+export TMUXIFIER_TMUX_OPTS="-2"
+export TMUXIFIER_LAYOUT_PATH="$HOME/dotfiles/zshrc.d/layouts"
+eval "$(tmuxifier init -)"
+
+# added by travis gem
+[ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh

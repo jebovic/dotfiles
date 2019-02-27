@@ -11,4 +11,12 @@ alias scrl="screen -ls"
 alias console="php app/console"
 alias router="php app/console router:debug --env=prod"
 
-alias memcached_flush="echo 'flush_all' | nc localhost 11211"
+#Tmux
+alias session="tmuxifier load-session"
+alias window="tmuxifier load-window"
+
+# k8s
+alias k="kubectl"
+alias ka="for file in $(ls); do k apply -f $file; done"
+alias kd="for file in $(ls); do k delete -f $file; done"
+
