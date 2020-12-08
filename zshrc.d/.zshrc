@@ -49,7 +49,7 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git colored-man-page colorize extract history npm symfony2 httpie screen tmux zsh-syntax-highlighting vagrant docker kubectl)
+plugins=(git colored-man-pages colorize extract history npm symfony2 httpie screen tmux zsh-syntax-highlighting vagrant docker kubectl zsh-autosuggestions history-substring-search)
 
 # User configuration
 
